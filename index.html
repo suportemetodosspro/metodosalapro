@@ -58,7 +58,7 @@
     .proof-intro{text-align:center;max-width:1080px;margin:-20px auto 58px;font-size:1.3rem;font-weight:700;color:#d8dee4}
     .proofs{display:grid;grid-template-columns:1.1fr .9fr .55fr;gap:46px;align-items:end}
     .proof{text-align:center}
-    .proof button{border:0;background:none;color:inherit;padding:0;cursor:zoom-in;width:100%}
+    .proof button{border:0;background:none;color:inherit;padding:0;cursor:zoom-in;width:100%;position:relative;overflow:hidden}
     .proof-img{width:100%;height:300px;object-fit:contain}
     .proof:nth-child(3) .proof-img{height:360px}
     .proof-video{width:min(230px,100%);aspect-ratio:9/16;margin:0 auto;border:0;border-radius:5px;background:#000;display:block}
@@ -97,9 +97,15 @@
     .faq p{padding:0 20px 20px;margin:0;font-weight:700;text-transform:none}
     .faq-cta{text-align:center;margin-top:60px}
     footer{background:var(--surface);padding:46px 20px;text-align:center;font-size:.9rem}
-    dialog{border:0;padding:0;background:transparent;max-width:min(1200px,94vw);max-height:92vh}
+    dialog{border:0;padding:0;background:transparent;width:94vw;max-width:1400px;max-height:92vh;overflow:visible}
     dialog::backdrop{background:rgba(0,0,0,.88)}
-    dialog img{max-height:88vh;max-width:94vw;object-fit:contain}
+    .modal-canvas{position:relative;display:flex;width:100%;height:88vh;align-items:center;justify-content:center}
+    dialog img{display:block;width:100%;height:100%;object-fit:contain}
+    .sensitive-mask{position:absolute;top:15.5%;height:17%;backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);background:rgba(8,14,20,.38);border-radius:3px;pointer-events:none}
+    .sensitive-mask.one{left:18.2%;width:18.2%}
+    .sensitive-mask.two{left:38.5%;width:18.2%}
+    .sensitive-mask.three{left:58.8%;width:18.2%}
+    .proof button .sensitive-mask{top:16%;height:16%;filter:blur(.2px)}
     .close-modal{position:fixed;right:24px;top:24px;width:46px;height:46px;border-radius:50%;border:1px solid #fff;background:#111;color:#fff;font-size:1.6rem;cursor:pointer}
     .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
     @media(max-width:900px){
@@ -261,7 +267,7 @@
 
   <footer><p>Todo negócio tem seu risco. Não é promessa de lucro.<br>As informações apresentadas possuem caráter educacional.<br>© 2026 Método Sala de Sinais Pro</p></footer>
 
-  <dialog id="imageModal" aria-label="Imagem ampliada"><button class="close-modal" type="button" aria-label="Fechar">×</button><img src="" alt="Comprovante ampliado"></dialog>
+ <dialog id="imageModal" aria-label="Imagem ampliada"><button class="close-modal" type="button" aria-label="Fechar">×</button><div class="modal-canvas"><img src="" alt="Comprovante ampliado"><span class="sensitive-mask one" aria-hidden="true"></span><span class="sensitive-mask two" aria-hidden="true"></span><span class="sensitive-mask three" aria-hidden="true"></span></div></dialog>
   <script>
     document.querySelectorAll('.js-checkout').forEach(link=>{
       link.href=CHECKOUT_URL;
@@ -271,7 +277,19 @@
     });
     const modal=document.getElementById('imageModal');
     const modalImage=modal.querySelector('img');
-    document.querySelectorAll('[data-modal-image]').forEach(button=>button.addEventListener('click',()=>{modalImage.src=button.dataset.modalImage;modal.showModal();}));
+    const modalMasks=modal.querySelectorAll('.sensitive-mask');
+    const firstProofButton=document.querySelector('[data-modal-image]');
+    ['one','two','three'].forEach(position=>{
+      const mask=document.createElement('span');
+      mask.className=`sensitive-mask ${position}`;
+      mask.setAttribute('aria-hidden','true');
+      firstProofButton.appendChild(mask);
+    });
+    document.querySelectorAll('[data-modal-image]').forEach((button,index)=>button.addEventListener('click',()=>{
+      modalImage.src=button.dataset.modalImage;
+      modalMasks.forEach(mask=>mask.hidden=index!==0);
+      modal.showModal();
+    }));
     modal.querySelector('.close-modal').addEventListener('click',()=>modal.close());
     modal.addEventListener('click',event=>{if(event.target===modal)modal.close();});
   </script>
