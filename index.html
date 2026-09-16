@@ -5,6 +5,35 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Método Sala de Sinais Pro: estrutura, vendas, operação e gestão de uma comunidade por assinatura.">
   <title>Método Sala de Sinais Pro</title>
+  <!-- Google Analytics com consentimento LGPD -->
+  <script>
+    window.dataLayer=window.dataLayer||[];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('consent','default',{analytics_storage:'denied',ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',wait_for_update:500});
+    gtag('js',new Date());
+    gtag('config','G-4M5XP6CP72');
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-4M5XP6CP72"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded',()=>{
+      const consentKey='mssp_cookie_consent';
+      const enableAnalytics=()=>gtag('consent','update',{analytics_storage:'granted'});
+      if(localStorage.getItem(consentKey)==='accepted') enableAnalytics();
+      if(!localStorage.getItem(consentKey)){
+        const banner=document.createElement('div');
+        banner.setAttribute('role','dialog');
+        banner.setAttribute('aria-label','Preferências de cookies');
+        banner.style.cssText='position:fixed;z-index:99999;left:16px;right:16px;bottom:16px;max-width:780px;margin:auto;padding:18px 20px;background:#0d1c2a;color:#f8fafc;border:1px solid #2db7df;border-radius:10px;box-shadow:0 8px 30px #0009;font:15px/1.45 Arial,sans-serif;display:flex;gap:16px;align-items:center;justify-content:space-between;flex-wrap:wrap';
+        banner.innerHTML='<span>Usamos cookies de medição para entender o desempenho do site e melhorar sua experiência.</span><span style="display:flex;gap:10px"><button data-choice="rejected" style="padding:10px 14px;border:1px solid #bac4ce;border-radius:6px;background:transparent;color:#fff;cursor:pointer">Recusar</button><button data-choice="accepted" style="padding:10px 14px;border:0;border-radius:6px;background:#2db7df;color:#061019;font-weight:800;cursor:pointer">Aceitar</button></span>';
+        banner.addEventListener('click',event=>{const choice=event.target.dataset.choice;if(!choice)return;localStorage.setItem(consentKey,choice);if(choice==='accepted')enableAnalytics();banner.remove();});
+        document.body.appendChild(banner);
+      }
+      document.addEventListener('click',event=>{
+        const link=event.target.closest('a[href*="kiwify.com.br"],a[href*="kiwify.app"]');
+        if(link) gtag('event','begin_checkout',{checkout_url:link.href,page_path:location.pathname,transport_type:'beacon'});
+      },true);
+    });
+  </script>
   <style>
     :root{
       --bg:#191d20;--surface:#24282c;--surface-2:#0d1c2a;--deep:#060c13;
