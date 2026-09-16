@@ -17,20 +17,28 @@
   <script>
     document.addEventListener('DOMContentLoaded',()=>{
       const consentKey='mssp_cookie_consent';
-      const enableAnalytics=()=>gtag('consent','update',{analytics_storage:'granted'});
-      if(localStorage.getItem(consentKey)==='accepted') enableAnalytics();
+      const enableMeasurement=()=>{
+        gtag('consent','update',{analytics_storage:'granted',ad_storage:'granted',ad_user_data:'granted',ad_personalization:'granted'});
+        if(!window.msspMetaLoaded){
+          window.msspMetaLoaded=true;
+          !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=true;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=true;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+          fbq('init','1846266739499886');
+          fbq('track','PageView');
+        }
+      };
+      if(localStorage.getItem(consentKey)==='accepted') enableMeasurement();
       if(!localStorage.getItem(consentKey)){
         const banner=document.createElement('div');
         banner.setAttribute('role','dialog');
         banner.setAttribute('aria-label','Preferências de cookies');
         banner.style.cssText='position:fixed;z-index:99999;left:16px;right:16px;bottom:16px;max-width:780px;margin:auto;padding:18px 20px;background:#0d1c2a;color:#f8fafc;border:1px solid #2db7df;border-radius:10px;box-shadow:0 8px 30px #0009;font:15px/1.45 Arial,sans-serif;display:flex;gap:16px;align-items:center;justify-content:space-between;flex-wrap:wrap';
         banner.innerHTML='<span>Usamos cookies de medição para entender o desempenho do site e melhorar sua experiência.</span><span style="display:flex;gap:10px"><button data-choice="rejected" style="padding:10px 14px;border:1px solid #bac4ce;border-radius:6px;background:transparent;color:#fff;cursor:pointer">Recusar</button><button data-choice="accepted" style="padding:10px 14px;border:0;border-radius:6px;background:#2db7df;color:#061019;font-weight:800;cursor:pointer">Aceitar</button></span>';
-        banner.addEventListener('click',event=>{const choice=event.target.dataset.choice;if(!choice)return;localStorage.setItem(consentKey,choice);if(choice==='accepted')enableAnalytics();banner.remove();});
+        banner.addEventListener('click',event=>{const choice=event.target.dataset.choice;if(!choice)return;localStorage.setItem(consentKey,choice);if(choice==='accepted')enableMeasurement();banner.remove();});
         document.body.appendChild(banner);
       }
       document.addEventListener('click',event=>{
         const link=event.target.closest('a[href*="kiwify.com.br"],a[href*="kiwify.app"]');
-        if(link) gtag('event','begin_checkout',{checkout_url:link.href,page_path:location.pathname,transport_type:'beacon'});
+        if(link){gtag('event','begin_checkout',{checkout_url:link.href,page_path:location.pathname,transport_type:'beacon'});if(window.fbq)fbq('track','InitiateCheckout',{content_name:document.title});}
       },true);
     });
   </script>
