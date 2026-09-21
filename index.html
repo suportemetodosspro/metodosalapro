@@ -134,9 +134,12 @@
     .faq summary::-webkit-details-marker{display:none}
     .faq summary::after{content:'⌄';position:absolute;right:18px;top:10px;font-size:1.8rem}
     .faq p{padding:0 20px 20px;margin:0;font-weight:700;text-transform:none}
-    .support-contact{text-align:center;margin:38px auto 0;color:var(--muted);font-size:1rem}
-    .support-contact a{color:var(--cyan);font-weight:900;text-decoration:none;overflow-wrap:anywhere}
-    .support-contact a:hover,.support-contact a:focus-visible{text-decoration:underline}
+    .support-contact{text-align:center;margin:38px auto 0;padding:24px;border:1px solid rgba(39,191,238,.35);border-radius:16px;background:#091522;color:var(--muted);font-size:1rem}
+    .support-contact strong{display:block;margin-bottom:14px;color:var(--white);font-size:1.12rem}
+    .contact-actions{display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+    .contact-actions a{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:11px 18px;border:1px solid var(--cyan);border-radius:8px;color:var(--cyan);font-weight:900;text-decoration:none;overflow-wrap:anywhere}
+    .contact-actions a:hover,.contact-actions a:focus-visible{filter:brightness(1.1);transform:translateY(-1px)}
+    .contact-actions .whatsapp-link{border-color:#25d366;background:#25d366;color:#06140c}
     .faq-cta{text-align:center;margin-top:60px}
     footer{background:var(--surface);padding:46px 20px;text-align:center;font-size:.9rem}
     dialog{border:0;padding:60px 0 0;background:transparent;width:94vw;max-width:1400px;max-height:94dvh;overflow:auto}
@@ -312,7 +315,7 @@
           <details class="faq"><summary>Como funcionam o suporte e a call individual?</summary><p>Após concluir o treinamento, você poderá agendar uma call individual de 30 minutos para esclarecer dúvidas sobre a implementação.</p></details>
           <details class="faq"><summary>Posso solicitar reembolso?</summary><p>Sim. A compra conta com garantia de 7 dias, observadas as condições apresentadas no checkout.</p></details>
         </div>
-        <p class="support-contact">Ainda precisa de ajuda? Fale com nosso suporte pelo e-mail <a href="mailto:suporte@metodosalapro.com.br">suporte@metodosalapro.com.br</a>.</p>
+        <div class="support-contact"><strong>Ainda precisa de ajuda?</strong><div class="contact-actions"><a href="mailto:suporte@metodosalapro.com.br" aria-label="Enviar e-mail para o suporte">✉ suporte@metodosalapro.com.br</a><a class="whatsapp-link" href="https://wa.me/5521959512782?text=Ol%C3%A1%21%20Gostaria%20de%20tirar%20uma%20d%C3%BAvida%20sobre%20o%20M%C3%A9todo%20Sala%20de%20Sinais%20Pro." target="_blank" rel="noopener noreferrer" aria-label="Falar com o suporte pelo WhatsApp">WhatsApp: (21) 95951-2782</a></div></div>
         <div class="faq-cta"><a class="cta js-checkout" href="https://pay.kiwify.com.br/DlvXgHE" rel="noopener">Quero acessar o método</a></div>
       </div>
     </section>
