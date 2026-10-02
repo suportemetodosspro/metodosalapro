@@ -38,7 +38,10 @@
       }
       document.addEventListener('click',event=>{
         const link=event.target.closest('a[href*="kiwify.com.br"],a[href*="kiwify.app"]');
-        if(link){gtag('event','checkout_click',{checkout_url:link.href,page_path:location.pathname,transport_type:'beacon'});}
+        if(link){
+          gtag('event','checkout_click',{checkout_url:link.href,page_path:location.pathname,transport_type:'beacon'});
+          if(window.fbq)fbq('track','InitiateCheckout',{content_name:document.title,content_category:'Produto digital'});
+        }
       },true);
     });
   </script>
